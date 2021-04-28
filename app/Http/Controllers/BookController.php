@@ -22,4 +22,21 @@ class BookController extends Controller {
         // 取得した値をビュー「book/edit」に渡す
         return view('book/edit', compact('book'));
     }  
+
+    public function update(Request $request,  $id) {
+        $book = Book::findORfail($id);
+        $book->name = $request->name;
+        $book->price = $request->price;
+        $book->author = $request->author;
+        $book->save();
+        
+        return redirect("/book");
+    }
+
+    public function destroy($id) {
+        $book = Book::findORfail($id);
+        $book->delete();
+        
+        return redirect("/book");
+    }
 }
